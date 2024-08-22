@@ -22,7 +22,7 @@ def hello_world():
     if request.method=='POST':
         if(request.form['name']=="" or request.form['age']=="" or request.form['role']==""):
             test = db_attr.query.all()
-            return render_template('new.html', dbase = test)
+            return render_template('index.html', dbase = test)
         print('done')
         namee = request.form['name']
         agee = request.form['age']
@@ -34,7 +34,7 @@ def hello_world():
         db.session.commit()
     test = db_attr.query.all()
     print(db_attr)
-    return render_template('new.html', dbase = test)
+    return render_template('index.html', dbase = test)
 
 #update entry once the update button is clicked
 @app.route('/update/<int:sno>', methods = ['GET', 'POST'])
