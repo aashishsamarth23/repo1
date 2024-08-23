@@ -2,7 +2,6 @@ from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import delete
 
-
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///project.db"
 
@@ -17,7 +16,7 @@ class db_attr(db.Model):
     name = db.Column(db.String(100), nullable = False)
     age = db.Column(db.Integer, nullable = False)
     desc = db.Column(db.String(200), nullable = False)
-    def __str__(self):
+    def __repr__(self):
         return 'db_attr {}'.format(db_attr.sno)
     
 
@@ -29,19 +28,15 @@ with app.app_context():
 #taking input from the homepage form
 @app.route('/', methods = ['GET', 'POST'])
 def hello_world():
-    print('here in hello_world')
     
     if request.method=='POST':
         if(request.form['name']=="" or request.form['age']=="" or request.form['role']==""):
             test = db_attr.query.all()
             return render_template('index.html', dbase = test)
-        print('done')
         namee = request.form['name']
         agee = request.form['age']
         role = request.form['role']
-        print('reached here')
         dbase = db_attr(name = namee, age = agee, desc = role)
-        print('reached here too')
         db.session.add(dbase)
         db.session.commit()
     test = db_attr.query.all()
